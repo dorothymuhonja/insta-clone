@@ -8,7 +8,9 @@ from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.views.generic import RedirectView
 from django.contrib import messages
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
 
 
 
@@ -25,7 +27,7 @@ def register(request):
     
     return render(request, 'registration/register.html', {'form': form})
 
-@login_required(login_url='login')
+@login_required
 def index(request):
     images = Post.objects.all()
     users = User.objects.exclude(id=request.user.id)
@@ -38,10 +40,125 @@ def index(request):
             return HttpResponseRedirect(request.path_info)
     else:
         form = PostForm()
+
+
     params = {
         'images': images,
         'form': form,
-        'users': users
+        'users': users,
     }
 
     return render(request, 'insta/index.html')
+
+
+@login_required
+def profile(request, username):
+    images = request.user.profile.posts.all()
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateUserProfileForm(request.POST,request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid:
+            user_form.save()
+            profile_form.save()
+            return HttpResponseRedirect(request.path_info)
+
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateUserProfileForm(instance=request.user.profile)
+
+    params = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'images':images,
+    }
+    return render(request, 'insta/profile.html', params)
+
+
+@login_required
+def user_profile(request, username):
+    u_profile = get_object_or_404(User, username=username)
+    if request.user == u_profile:
+        return redirect('profile', username=request.user.username)
+    user_posts = u_profile.profile.posts.all()
+
+    followers = Follow,objects.filter(followed=u_profile.profile)
+    follow_status = None
+    for follower in followers:
+        if request.user.profile == follower.follower:
+            follow_status = True
+        else:
+            follow_status = False
+
+
+    params = {
+        'u_profile': u_profile,
+        'user_posts': user_posts,
+        'followers': followers,
+        'follow_status': follow_status
+    }
+    return render(request, 'insta/user_profile.html', params)
+
+
+@login_required
+def post_comment(request, id):
+    image = get_object_or_404(Post, pk=id)
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        is_liked = True
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            savecomment = form.save(commit=False)
+            savecomment.post = image
+            savecomment.user = request.user.profile
+            savecomment.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = CommentForm()
+    
+
+    params = {
+        'image': image,
+        'form': form,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    return render(request, 'insta/post_comment.html', params)
+
+
+class PostLikeToggle(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        id = self.kwargs.get('id')
+        obj = get_object_or_404(Post, pk=id)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user in obj.likes.all():
+            obj.likes.remove(user)
+        else:
+            obj.likes.remove(user)
+        return url_
+
+class PostLikeAPIToggle(APIView):
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, id=None, format=None):
+        obj = get_object_or_404(Post, pk=id)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        updated = False
+        liked = False
+        if user in obj.likes.all():
+            liked = False
+            obj.likes.remove(user)
+        else:
+            liked = True
+            obj.likes.add(user)
+            updated = True
+
+            data = {
+                'updated': updated,
+                'liked': liked
+            }
+            return Response(data)
+

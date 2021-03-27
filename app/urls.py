@@ -4,11 +4,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from app import views as app_views
+from app.views import PostLikeToggle, PostLikeAPIToggle
 
 
 urlpatterns = [
     path('register/',app_views.register, name='register'),
     path('login/',auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('logout/',auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
+    path('', views.index, name='index'),
+    path('profile/<str:username>/', app_views.profile, name='profile'),
+    path('user_profile/<str:username>/', app_views.user_profile, name='user_profile'),
+    path('post/<int:id>/', app_views.post_comment, name='comment'),
+    path('post/<int:id>/like/', PostLikeToggle.as_view(), name='liked'),
+    path('api/post/<int:id>/like/', PostLikeAPIToggle.as_view(), name='liked-api')
 ]
 
 
