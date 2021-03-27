@@ -7,22 +7,41 @@ from .models import Post, Comment, Profile, Follow
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.views.generic import RedirectView
+from django.contrib import messages
 
 
 
 
-def signup(request):
+def register(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('index')
-            
+            messages.success(request, f'Your account has been created! You are now able to log in')
+            return redirect('login')
     else:
         form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
+    
+    return render(request, 'registration/register.html', {'form': form})
 
+@login_required(login_url='login')
+def index(request):
+    images = Post.objects.all()
+    users = User.objects.exclude(id=request.user.id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user.profile
+            post.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = PostForm()
+    params = {
+        'images': images,
+        'form': form,
+        'users': users
+    }
+
+    return render(request, 'insta/index.html')
