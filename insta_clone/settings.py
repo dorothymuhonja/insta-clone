@@ -38,6 +38,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # third party apps
     'cloudinary',
+    'crispy_forms',
     # my apps
     'app',
     # django apps
@@ -50,6 +51,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # third party middleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # django middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -132,6 +136,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 
