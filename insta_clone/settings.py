@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f$9vo)14s--q#o7pyp2s%l#6zlsx5#vai9izqkfoh4*mc66p@0'
+SECRET_KEY : os.environ.get('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,6 +89,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get("DB_USER"),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
+        
         # 'HOST': os.environ.get('DB_HOST'),
         # 'PORT':''
     }
@@ -133,6 +135,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
+# cloudinary configurations
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
     'API_KEY': os.environ.get('API_KEY'),
