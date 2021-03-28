@@ -162,3 +162,41 @@ class PostLikeAPIToggle(APIView):
             }
             return Response(data)
 
+
+def like_post(request):
+    image = get_object_or_404(Post, id=request.POST.get('id'))
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        image.likes.remove(request.user)
+        is_liked = False
+    else:
+        image.likes.add(request.user)
+        is_liked = True
+
+    params = {
+        'image': image,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    if request.is_ajax():
+        html = render_to_string('insta/like_section.html', params, request=request)
+        return JsonResponse({'form': html})
+
+
+@login_required
+def search_profile(request):
+    if 'search_user' in request.GET and request.GET['search_user']:
+        name = request.GET.get('search_user')
+        results = Profile.search_profile(name)
+        print(results)
+        message = f'name'
+
+        params = {
+            'results': results,
+            'message': message
+        }
+        return render(request, 'insta/results.html', params)
+    else:
+        message = "You haven't searched for anyone"
+    return render(request, 'insta/results.html', {'message': message})
+

@@ -16,7 +16,9 @@ urlpatterns = [
     path('user_profile/<str:username>/', app_views.user_profile, name='user_profile'),
     path('post/<int:id>/', app_views.post_comment, name='comment'),
     path('post/<int:id>/like/', PostLikeToggle.as_view(), name='liked'),
-    path('api/post/<int:id>/like/', PostLikeAPIToggle.as_view(), name='liked-api')
+    path('api/post/<int:id>/like/', PostLikeAPIToggle.as_view(), name='liked-api'),
+    path('like/', app_views.like_post, name='like_post'),
+    path('search/', app_views.search_profile, name='search'),
 ]
 
 
