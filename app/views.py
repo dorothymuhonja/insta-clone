@@ -81,7 +81,7 @@ def user_profile(request, username):
         return redirect('profile', username=request.user.username)
     user_posts = u_profile.profile.posts.all()
 
-    followers = Follow,objects.filter(followed=u_profile.profile)
+    followers = Follow.objects.filter(followed=u_profile.profile)
     follow_status = None
     for follower in followers:
         if request.user.profile == follower.follower:

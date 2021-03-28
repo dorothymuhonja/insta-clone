@@ -16,12 +16,12 @@
                                     <span class="mr-3 text-secondary username">{{ user_prof.username }}</span>
                                     {% if follow_status %}
                                     <a class="btn btn-sm btn-outline-danger ml-5"
-                                        href="{% url 'unfollow' user_prof.profile.id %}">Unfollow</a>
+                                        href="{% url 'unfollow' u_profile.profile.id %}">Unfollow</a>
 
                                     {%else%}
 
                                     <a class="btn btn-sm btn-primary ml-5"
-                                        href="{% url 'follow' user_prof.profile.id %}">Follow</a>
+                                        href="{% url 'follow' u_profile.profile.id %}">Follow</a>
                                     {% endif %}
 
 

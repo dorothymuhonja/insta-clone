@@ -52,15 +52,14 @@
                     </div>
                     <div class="iconic ml-2">
                         <button class="btn btn-sm" type="submit" name="image_id" value="{{image.id}}">
-                            <a href="{% url 'comment' image.id %}"><i class="far fa-heart hearticon mx-auto"
+                            <a href="{% url 'comment' image.id %}"><i class="fa fa-heart hearticon mx-auto"
                                     aria-hidden="true" ></i></a>
                         </button>
                         <button class="btn btn-sm" type="submit"><a href="{% url 'comment' image.id %}"><i
-                                    class="far fa-comment hearticon mx-auto" aria-hidden="true"></i>
+                                    class="fa fa-comment hearticon mx-auto" aria-hidden="true"></i>
                             </a></button>
                     </div>
-                    <span class="ml-4 mb-1"><strong>{{image.likes.count}}
-                            like{{image.likes.count|pluralize}}</strong></span>
+                    <span class="ml-4 mb-1"><strong>{{image.likes.count}} like{{image.likes.count|pluralize}}</strong></span>
                     <span class="text-secondary ml-4 viewall"><a href="{% url 'comment' image.id %}">view all
                             {{image.comments.count}} comment{{image.comments.count|pluralize}}</a></span>
                     <div class="allcomments mb-4">
