@@ -48,7 +48,7 @@ def index(request):
         'users': users,
     }
 
-    return render(request, 'insta/index.html')
+    return render(request, 'insta/index.html', params)
 
 
 @login_required
