@@ -2,6 +2,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144351462-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-144351462-1');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -15,6 +22,26 @@
     {% endif %}
 </head>
 <body>
+    <div class="navbar fixed-top bg-white">
+        <nav class="container">
+            <span class="navbar-brand mb-0 h1">
+                <a href="/">Insta-Clone</a>
+               
+            </span>
+            <form class="mb-0 h1 ml-auto mr-auto" id="searchform" action="{% url 'search' %}">
+                <input name="search_user" autocomplete="off" id="searching" class="form-control d-none d-md-block"
+                    placeholder="Search">
+                <i class="spinner "></i>
+            </form>
+            <span class="pull-right">
+                <a href="/" class="instaicon pers">Home</a>
+            </span>
+            <span class="pull-right">
+                <a href="{% url 'profile' user.username %}" class="instaicon pers">Profile</a>
+            </span>
+        </nav>
+    </div>
+
     {% block content %}
     {% endblock %}
     

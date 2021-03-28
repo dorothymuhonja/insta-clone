@@ -34,7 +34,7 @@ class Profile(models.Model):
 
     @classmethod
     def search_profile(cls, name):
-        return cls.ocjects.filter(user__uername__icontains=name).all()
+        return cls.objects.filter(user__username__icontains=name).all()
 
 
 
