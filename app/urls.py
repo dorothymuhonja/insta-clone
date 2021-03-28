@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 from app import views as app_views
 from app.views import PostLikeToggle, PostLikeAPIToggle
 
+appname= 'app'
 
 urlpatterns = [
     path('register/',app_views.register, name='register'),
