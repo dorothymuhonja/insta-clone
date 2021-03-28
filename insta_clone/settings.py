@@ -14,7 +14,6 @@ from pathlib import Path
 import django_heroku
 import os
 
-load_dotenv()
 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,7 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','insta-clone-django.herokuapp.com','127.0.0.1']
 
 
 # Application definition
