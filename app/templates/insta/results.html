@@ -29,9 +29,13 @@
                                         href="{% url 'user_profile' user_profile.user.username  %}">{{user_profile.user.username}}</a></strong></span><br>
                             <span class="text-secondary">{{user_profile.user.profile.name}}</span>
                         </div>
-                        <div class="col-md-3 mt-3">
-                            <button class="btn btn-sm btn-outline-primary">follow</button>
-                        </div>
+                        {% if follow_status %}
+                        <a class="btn btn-sm btn-outline-danger ml-5" href="{% url 'unfollow' u_profile.profile.id %}">Unfollow</a>
+                        
+                        {%else%}
+                        
+                        <a class="btn btn-sm btn-primary ml-5" href="{% url 'follow' u_profile.profile.id %}">Follow</a>
+                        {% endif %}
 
                     </div>
                 </div>
