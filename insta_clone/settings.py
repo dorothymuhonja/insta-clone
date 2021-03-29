@@ -157,12 +157,18 @@ LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
 
 
-# cloudinary configurations
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
-    'API_KEY': os.environ.get('API_KEY'),
-    'API_SECRET': os.environ.get('API_SECRET'),
-}
+# # cloudinary configurations
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
+#     'API_KEY': os.environ.get('API_KEY'),
+#     'API_SECRET': os.environ.get('API_SECRET'),
+# }
+# configuring cloudinary
+cloudinary.config(
+    CLOUD_NAME = 'dv4higsmg',
+    API_KEY = '147719463578893',
+    API_SECRET = 'DW3XibSion_my9OJTwLZRtGQhm8'
+)
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
