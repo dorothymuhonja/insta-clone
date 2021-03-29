@@ -3,11 +3,12 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UpdateUserForm, UpdateUserProfileForm, PostForm, CommentForm
 from django.contrib.auth import login, authenticate
-from .models import Post, Comment, Profile, Follow
+from .models import Post, Comment, Profile, Follow, Likes
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.views.generic import RedirectView
 from django.contrib import messages
+from django.urls import reverse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
@@ -25,7 +26,7 @@ def register(request):
     else:
         form = SignUpForm()
     
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'registration/register.html', {'form': form })
 
 
 
@@ -104,9 +105,9 @@ def user_profile(request, username):
 @login_required
 def post_comment(request, id):
     image = get_object_or_404(Post, pk=id)
-    is_liked = False
-    if image.likes.filter(id=request.user.id).exists():
-        is_liked = True
+    # is_liked = False
+    # if image.likes.filter(id=request.user.id).exists():
+    #     is_liked = True
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -122,67 +123,33 @@ def post_comment(request, id):
     params = {
         'image': image,
         'form': form,
-        'is_liked': is_liked,
-        'total_likes': image.total_likes()
+        # 'is_liked': is_liked,
+        # 'total_likes': image.total_likes()
     }
     return render(request, 'insta/post_comment.html', params)
 
-
-class PostLikeToggle(RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        id = self.kwargs.get('id')
-        obj = get_object_or_404(Post, pk=id)
-        url_ = obj.get_absolute_url()
-        user = self.request.user
-        if user in obj.likes.all():
-            obj.likes.remove(user)
-        else:
-            obj.likes.remove(user)
-        return url_
-
-class PostLikeAPIToggle(APIView):
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get(self, request, id=None, format=None):
-        obj = get_object_or_404(Post, pk=id)
-        url_ = obj.get_absolute_url()
-        user = self.request.user
-        updated = False
-        liked = False
-        if user in obj.likes.all():
-            liked = False
-            obj.likes.remove(user)
-        else:
-            liked = True
-            obj.likes.add(user)
-            updated = True
-
-            data = {
-                'updated': updated,
-                'liked': liked
-            }
-            return Response(data)
-
-
-def like_post(request):
-    image = get_object_or_404(Post, id=request.POST.get('id'))
-    is_liked = False
-    if image.likes.filter(id=request.user.id).exists():
-        image.likes.remove(request.user)
-        is_liked = False
+@login_required
+def like(request,post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    current_likes = post.likes
+    
+    liked = Likes.objects.filter(user=user, post=post).count()
+    
+    if not liked:
+        like = Likes.objects.create(user=user,post=post)
+        
+        current_likes = current_likes + 1
+        
     else:
-        image.likes.add(request.user)
-        is_liked = True
+        Likes.objects.filter(user=user,post=post).delete()
 
-    params = {
-        'image': image,
-        'is_liked': is_liked,
-        'total_likes': image.total_likes()
-    }
-    if request.is_ajax():
-        html = render_to_string('insta/like_section.html', params, request=request)
-        return JsonResponse({'form': html})
+        current_likes = current_likes - 1
+        
+    post.likes = current_likes
+    post.save() 
+    
+    return HttpResponseRedirect(reverse('index'))  
 
 
 @login_required

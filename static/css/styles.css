@@ -48,12 +48,12 @@ h1{
     color:black;
     text-align:center;
 }
-.hearticon{
+/* .hearticon{
     color:black;
     font-size:30px;
     margin-left:-10px;
     margin-right:-10px;
-}
+} */
 .viewall a{
     text-decoration:none;
     color:grey;
@@ -149,6 +149,11 @@ body{
 
 .card-text img{
     height: 500px;
-    /* width: 600px; */
+    object-fit: fill;
+}
+
+.p-image img{
+    height: 500px;
+   
     object-fit: fill;
 }
