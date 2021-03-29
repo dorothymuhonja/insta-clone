@@ -163,8 +163,9 @@ LOGOUT_REDIRECT_URL = 'login'
 #     'API_KEY': os.environ.get('API_KEY'),
 #     'API_SECRET': os.environ.get('API_SECRET'),
 # }
+
 # configuring cloudinary
-cloudinary.config(
+CLOUDINARY_STORAGE = (
     CLOUD_NAME = 'dv4higsmg',
     API_KEY = '147719463578893',
     API_SECRET = 'DW3XibSion_my9OJTwLZRtGQhm8'
