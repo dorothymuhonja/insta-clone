@@ -166,9 +166,9 @@ LOGOUT_REDIRECT_URL = 'login'
 
 # configuring cloudinary
 CLOUDINARY_STORAGE = {
-    CLOUD_NAME = 'dv4higsmg',
-    API_KEY = '147719463578893',
-    API_SECRET = 'DW3XibSion_my9OJTwLZRtGQhm8'
+    cloud_name: 'dv4higsmg',
+    api_key: '147719463578893',
+    api_secret: 'DW3XibSion_my9OJTwLZRtGQhm8'
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
