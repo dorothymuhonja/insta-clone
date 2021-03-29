@@ -77,19 +77,11 @@
                 {% endfor %}
             </div>
             <div class="col-md-4 mt-4 userinfo">
-                <div class="row">
-                    <div class="col-md-3 ml-2">
-                        <img class="rounded-circle user-img" src="{{ user.profile.profile_picture.url }}">
-                    </div>
-                    <div class="col-md-6 mt-4 user-detail">
-                        <span class=" text-secondary"><a href="{% url 'user_profile' user.username %}">{{ user.username }}</a></span> <br>
-                        <span class=" inname">{{ user.profile.name }}</span>
-                    </div>
-                </div>
+                
                 <div class="row">
                     <div class="col-md-10">
                         <div class="card mt-4 mr-2 ml-2">
-                            <div class="card-title text-secondary mt-2 mr-2 ml-2 ">Suggestions</div>
+                            <div class="card-title text-secondary mt-2 mr-2 ml-2 ">Other Users</div>
                             {% for user in users %}
                             <div class="container">
                                 <div class="row">

@@ -2,6 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css" rel="stylesheet" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144351462-1"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -36,20 +42,28 @@
                     placeholder="Search">
                 <i class="spinner "></i>
             </form>
-            <span class="pull-right">
-                <a href="/" class="instaicon pers">Home</a>
+
+            <div class="">
+
+
+
+            <span class="pull-right pr-4">
+                <a href="{% url 'logout' %}" class="instaicon pers"><i class="fas fa-sign-out-alt fa-2x"
+                        style="color:black;"></i></a>
             </span>
-            <span class="pull-right">
-                <a href="{% url 'profile' user.username %}" class="instaicon pers">Profile</a>
+
+            <span class="pull-right pr-4">
+                <a href="{% url 'profile' user.username %}" class="instaicon pers"><i class="fas fa-user fa-2x"
+                        style="color:black;"></i></a>
             </span>
-            <span class="pull-right">
-                <a href="{% url 'logout' %}" class="instaicon pers">Logout</a>
+
+            <span class="pull-right pr-4">
+                <a href="/" class="instaicon pers"><i class="fas fa-home fa-2x" style="color:black;"></i></a>
             </span>
-            <span class="pull-right">
-                <div class="instaicon disc"></div>
-                <div class="instaicon like"></div>
-                <a href="{% url 'profile' user.username %}" class="instaicon pers"></a>
-            </span>
+
+            
+
+            </div>
         </nav>
     </div>
 
@@ -69,5 +83,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"></script>
+
 </body>
 </html>
