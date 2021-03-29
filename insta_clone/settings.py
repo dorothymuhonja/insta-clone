@@ -160,7 +160,7 @@ LOGOUT_REDIRECT_URL = 'login'
 # cloudinary configurations
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
-    'API_KEY': os.environ.get('API_KEY'),
+    'CLOUD_API': os.environ.get('CLOUD_API'),
     'API_SECRET': os.environ.get('API_SECRET'),
 }
 
