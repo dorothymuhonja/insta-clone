@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import django_heroku
+import cloudinary
 import os
 
 
@@ -165,11 +166,11 @@ LOGOUT_REDIRECT_URL = 'login'
 # }
 
 # configuring cloudinary
-CLOUDINARY_STORAGE = {
-    cloud_name: 'dv4higsmg',
-    api_key: '147719463578893',
-    api_secret: 'DW3XibSion_my9OJTwLZRtGQhm8'
-}
+cloudinary.config(
+    cloud_name= 'dv4higsmg',
+    api_key= '147719463578893',
+    api_secret= 'DW3XibSion_my9OJTwLZRtGQhm8'
+)
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
