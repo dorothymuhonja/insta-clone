@@ -9,10 +9,6 @@ from django.template.loader import render_to_string
 from django.views.generic import RedirectView
 from django.contrib import messages
 from django.urls import reverse
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import authentication, permissions
-
 
 
 def register(request):
@@ -105,9 +101,6 @@ def user_profile(request, username):
 @login_required
 def post_comment(request, id):
     image = get_object_or_404(Post, pk=id)
-    # is_liked = False
-    # if image.likes.filter(id=request.user.id).exists():
-    #     is_liked = True
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -123,8 +116,6 @@ def post_comment(request, id):
     params = {
         'image': image,
         'form': form,
-        # 'is_liked': is_liked,
-        # 'total_likes': image.total_likes()
     }
     return render(request, 'insta/post_comment.html', params)
 
