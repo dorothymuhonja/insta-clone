@@ -17,6 +17,7 @@ This is a instagram-like app where a user can share like and comment on images.
 * Django
 * css3
 * html5
+* Javascript
 * Bootstrap
 
 
