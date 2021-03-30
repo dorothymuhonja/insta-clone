@@ -39,6 +39,7 @@ ALLOWED_HOSTS = ['localhost','insta-clone-django.herokuapp.com','127.0.0.1']
 INSTALLED_APPS = [
     # third party apps
     'cloudinary',
+    'cloudinary_storage',
     'crispy_forms',
     # my apps
     'app',

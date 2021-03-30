@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    profile_picture = models.ImageField(upload_to='images/', default='default.png')
+    profile_picture = models.ImageField(upload_to='images/', default='default.jpg')
     bio = models.TextField(blank=True)
     name = models.CharField(max_length=120, blank=True)
     location = models.CharField(max_length=60, blank=True)
@@ -62,8 +62,6 @@ class Post(models.Model):
     def delete_image(self):
         self.delete()
 
-    # def total_likes(self):
-    #     return self.likes.count()
 
     def __str__(self):
         return f'{self.user.name} Post'
@@ -87,6 +85,9 @@ class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_like')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_like')
 
+    class Meta:
+        verbose_name = 'Like'
+        verbose_name_plural = 'Likes'
 
 class Follow(models.Model):
     follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')

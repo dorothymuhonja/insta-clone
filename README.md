@@ -57,10 +57,7 @@ python3 manage.py runserver
 #### Admin
 Can add, change or delete the pictures and comments
 
-### Screenshots
- ![Landing Page](static/images/home.png)
-![Gallery](static/images/gallery.png)
-![Image details](static/images/details.png)
+
 
 ## Email Address
 dorothymuhonja7@gmail.com
