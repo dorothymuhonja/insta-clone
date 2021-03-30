@@ -56,6 +56,7 @@ python3 manage.py runserver
 
 #### Admin
 Can add, change or delete the pictures and comments
+Can add and remove users
 
 
 
