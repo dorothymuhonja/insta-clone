@@ -17,6 +17,7 @@ This is a instagram-like app where a user can share like and comment on images.
 * Django
 * css3
 * html5
+* Javascript
 * Bootstrap
 
 
@@ -55,7 +56,8 @@ python3 manage.py runserver
 * Follow your favorite users
 
 #### Admin
-Can add, change or delete the pictures and comments
+* Can add, change or delete the pictures and comments
+* Can add and remove users
 
 
 
